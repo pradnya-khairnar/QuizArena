@@ -7,6 +7,7 @@ import { UsersComponent } from './users/users.component';
 const routes: Routes = [
   { path: 'host', component: HostComponent },
   { path: 'user', component: UsersComponent },
+  { path: '**', component: AppComponent },
 ];
 
 @NgModule({
