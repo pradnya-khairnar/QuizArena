@@ -1,0 +1,10 @@
+<h2>User Screen</h2>
+<div>
+  <app-que-ans></app-que-ans>
+</div>
+
+<div class="users">
+  <button [disabled]="timer == 0" *ngIf="counter > 0" (click)="onSubmit()">
+    SubmitAns
+  </button>
+</div>

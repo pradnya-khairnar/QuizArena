@@ -1,0 +1,26 @@
+<h2>Host Screen</h2>
+<app-que-ans></app-que-ans>
+<button (click)="onStart()" *ngIf="count == 0">Start Quiz</button>
+<button
+  *ngIf="count > 0 && count <= questionBank.length"
+  [disabled]="timer != 0"
+  (click)="onShowAns()"
+>
+  Show Ans
+</button>
+
+<button
+  (click)="onNext()"
+  [disabled]="timer != 0"
+  *ngIf="count > 0 && count < questionBank.length"
+>
+  Next
+</button>
+
+<button
+  *ngIf="count == questionBank.length"
+  [disabled]="timer != 0"
+  (click)="onFinish()"
+>
+  Finish
+</button>

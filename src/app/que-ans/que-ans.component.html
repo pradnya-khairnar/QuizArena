@@ -1,4 +1,4 @@
-<!-- <div *ngIf="counter == 0">
+<div *ngIf="counter == 0">
   <div>Welcome to Quiz Arena</div>
 </div>
 <p *ngIf="counter > 0 && counter <= questionBank.length">
@@ -22,20 +22,6 @@
       </p>
     </ul>
   </div>
-</div> -->
-<!-- <app-host
-  (counter)="getCounter($event)"
-  (showAns)="onShowAns($event)"
-  [timer]="timeLeft"
-></app-host>
-<app-users [timer]="timeLeft" [ansShown]="displayAns"></app-users> -->
+</div>
 
-<ul>
-  <li role="presentation" routerLinkActive="active">
-    <a routerLink="/host">Host</a>
-  </li>
-  <li role="presentation" routerLinkActive="active">
-    <a [routerLink]="'/user'">Users</a>
-  </li>
-</ul>
-<router-outlet></router-outlet>
+<div *ngIf="counter > questionBank.length">Thanks for taking the quiz..</div>
