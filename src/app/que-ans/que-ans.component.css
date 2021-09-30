@@ -1,3 +1,6 @@
+ul {
+  list-style-type: none;
+}
 .ansDisplayed {
   background-color: rgb(113, 158, 113);
   display: inline-block;

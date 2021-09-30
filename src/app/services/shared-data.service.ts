@@ -60,7 +60,14 @@ export class SharedDataService implements OnDestroy {
     this.ans = this.ques.ans[ai];
   }
   onSubmit() {
-    console.log(this.ques.que, this.ans);
+    console.log(
+      'Q.',
+      this.ques.que,
+      'User Ans:',
+      this.ans,
+      'Correct Ans:',
+      this.ques.correct
+    );
   }
   onShowAns() {
     this.displayAns = true;

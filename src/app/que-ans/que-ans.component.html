@@ -1,61 +1,67 @@
-<div *ngIf="counter == 0">
-  <div>Welcome to Quiz Arena</div>
-</div>
-<p *ngIf="counter > 0 && counter <= questionBank.length">Timer: {{ timer }}</p>
-<div *ngIf="counter > 0 && counter <= questionBank.length">
-  <div *ngFor="let ques of questionBank; let qi = index">
-    <ul class="que" *ngIf="ques.counter == counter">
-      <li class="hide show">
-        {{ ques.que }}
-      </li>
-      <p
-        class="ans"
-        [ngClass]="{
-          ansDisplayed: displayAns && ques.correct == ques.ans[ai]
-        }"
-        *ngFor="let ans of ques.ans; let ai = index"
-        (click)="onAnsClick(qi, ai)"
-      >
-        <button [disabled]="timer == 0">{{ ans }}</button>
-      </p>
-    </ul>
+<div>
+  <div *ngIf="loadedUrl == '/host'">
+    <h2>Host Screen</h2>
   </div>
-</div>
-<div *ngIf="counter > questionBank.length">Thanks for taking the quiz..</div>
-<!--Host section -->
-<div *ngIf="loadedUrl == '/host'">
-  <h2>Host Screen</h2>
-  <button (click)="onStart()" *ngIf="counter == 0">Start Quiz</button>
-  <button
-    *ngIf="counter > 0 && counter <= questionBank.length"
-    [disabled]="timer != 0"
-    (click)="onShowAns()"
-  >
-    Show Ans
-  </button>
-
-  <button
-    (click)="onNext()"
-    [disabled]="timer != 0"
-    *ngIf="counter > 0 && counter < questionBank.length"
-  >
-    Next
-  </button>
-
-  <button
-    *ngIf="counter == questionBank.length"
-    [disabled]="timer != 0"
-    (click)="onFinish()"
-  >
-    Finish
-  </button>
-</div>
-<!-- Users section -->
-<div *ngIf="loadedUrl == '/users'">
-  <h2>User Screen</h2>
-  <div class="users">
-    <button [disabled]="timer == 0" *ngIf="counter > 0" (click)="onSubmit()">
-      SubmitAns
+  <div *ngIf="loadedUrl == '/users'">
+    <h2>User Screen</h2>
+  </div>
+  <div *ngIf="counter == 0">
+    <div>Welcome to Quiz Arena</div>
+  </div>
+  <p *ngIf="counter > 0 && counter <= questionBank.length">
+    Timer: {{ timer }}
+  </p>
+  <div *ngIf="counter > 0 && counter <= questionBank.length">
+    <div *ngFor="let ques of questionBank; let qi = index">
+      <ul class="que" *ngIf="ques.counter == counter">
+        <li class="hide show">{{ counter }}. {{ ques.que }}</li>
+        <p
+          class="ans"
+          [ngClass]="{
+            ansDisplayed: displayAns && ques.correct == ques.ans[ai]
+          }"
+          *ngFor="let ans of ques.ans; let ai = index"
+          (click)="onAnsClick(qi, ai)"
+        >
+          <button [disabled]="timer == 0">{{ ans }}</button>
+        </p>
+      </ul>
+    </div>
+  </div>
+  <div *ngIf="counter > questionBank.length">Thanks for taking the quiz..</div>
+  <!--Host section -->
+  <div *ngIf="loadedUrl == '/host'">
+    <button (click)="onStart()" *ngIf="counter == 0">Start Quiz</button>
+    <button
+      *ngIf="counter > 0 && counter <= questionBank.length"
+      [disabled]="timer != 0"
+      (click)="onShowAns()"
+    >
+      Show Ans
     </button>
+
+    <button
+      (click)="onNext()"
+      [disabled]="timer != 0"
+      *ngIf="counter > 0 && counter < questionBank.length"
+    >
+      Next
+    </button>
+
+    <button
+      *ngIf="counter == questionBank.length"
+      [disabled]="timer != 0"
+      (click)="onFinish()"
+    >
+      Finish
+    </button>
+  </div>
+  <!-- Users section -->
+  <div *ngIf="loadedUrl == '/users'">
+    <div class="users">
+      <button [disabled]="timer == 0" *ngIf="counter > 0" (click)="onSubmit()">
+        SubmitAns
+      </button>
+    </div>
   </div>
 </div>
