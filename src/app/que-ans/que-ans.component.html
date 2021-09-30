@@ -13,10 +13,9 @@
   </p>
   <div *ngIf="counter > 0 && counter <= questionBank.length">
     <div *ngFor="let ques of questionBank; let qi = index">
-      <ul class="que" *ngIf="ques.counter == counter">
-        <li class="hide show">{{ counter }}. {{ ques.que }}</li>
+      <ul *ngIf="ques.counter == counter">
+        <li>{{ counter }}. {{ ques.que }}</li>
         <p
-          class="ans"
           [ngClass]="{
             ansDisplayed: displayAns && ques.correct == ques.ans[ai]
           }"
@@ -58,7 +57,7 @@
   </div>
   <!-- Users section -->
   <div *ngIf="loadedUrl == '/users'">
-    <div class="users">
+    <div>
       <button [disabled]="timer == 0" *ngIf="counter > 0" (click)="onSubmit()">
         SubmitAns
       </button>
