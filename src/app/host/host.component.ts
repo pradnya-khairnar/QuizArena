@@ -5,7 +5,9 @@ import {
   EventEmitter,
   DoCheck,
 } from '@angular/core';
-import { SharedDataService } from '../shared-data.service';
+import { Socket } from 'ngx-socket-io';
+import { SharedDataService } from '../services/shared-data.service';
+import { WebSocketService } from '../services/web-socket.service';
 
 @Component({
   selector: 'app-host',
@@ -14,42 +16,49 @@ import { SharedDataService } from '../shared-data.service';
 })
 export class HostComponent implements OnInit, DoCheck {
   questionBank = [];
-  count = 0;
   displayAns;
-  timer;
+  count = 0;
+  timer = 0;
 
   @Output('counter') counter: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private dataService: SharedDataService) {
+  constructor(
+    private dataService: SharedDataService // private webSocketService: WebSocketService,
+  ) // private socket: Socket
+  {
     this.questionBank = dataService.questionBank;
     this.count = dataService.counter;
   }
 
   ngOnInit() {
-    this.dataService.latestCount.subscribe({
-      next: (count: number) => {
-        this.count = count;
-      },
-    });
+    // this.webSocketService.sendCountTime('CountAndTime', { count: 0, time: 10 });
+    // this.socket.on('CountAndTime', (data) => {
+    //   console.log('data from server', data.count, data.time);
+    // });
+    // this.dataService.latestCount.subscribe({
+    //   next: (count: number) => {
+    //     this.count = count;
+    //   },
+    // });
   }
   ngDoCheck() {
-    this.dataService.coummunicateTime.subscribe((time) => {
-      this.timer = time;
-    });
+    // this.dataService.coummunicateTime.subscribe((time) => {
+    //   this.timer = time;
+    // });
   }
 
-  onStart() {
-    this.dataService.onStart();
-  }
-  onNext() {
-    this.timer = 10;
-    this.dataService.giveUpdatedTime(this.timer);
-    this.dataService.onNext();
-  }
-  onFinish() {
-    this.dataService.onFinish();
-  }
-  onShowAns() {
-    this.dataService.onShowAns();
-  }
+  // onStart() {
+  //   this.dataService.onStart();
+  // }
+  // onNext() {
+  //   this.timer = 10;
+  //   this.dataService.giveUpdatedTime(this.timer);
+  //   this.dataService.onNext();
+  // }
+  // onFinish() {
+  //   this.dataService.onFinish();
+  // }
+  // onShowAns() {
+  //   this.dataService.onShowAns();
+  // }
 }

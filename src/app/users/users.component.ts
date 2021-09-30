@@ -1,5 +1,5 @@
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
-import { SharedDataService } from '../shared-data.service';
+import { SharedDataService } from '../services/shared-data.service';
 
 @Component({
   selector: 'app-users',
@@ -12,18 +12,18 @@ export class UsersComponent implements OnInit, DoCheck {
   questionBank = [];
 
   constructor(private dataService: SharedDataService) {
-    this.questionBank = dataService.questionBank;
-    this.counter = dataService.counter;
+    // this.questionBank = dataService.questionBank;
+    // this.counter = dataService.counter;
   }
 
   ngOnInit() {}
   ngDoCheck() {
-    this.dataService.coummunicateTime.subscribe((time) => {
-      this.timer = time;
-    });
+    // this.dataService.coummunicateTime.subscribe((time) => {
+    //   this.timer = time;
+    // });
   }
 
-  onSubmit() {
-    this.dataService.onSubmit();
-  }
+  // onSubmit() {
+  //   this.dataService.onSubmit();
+  // }
 }

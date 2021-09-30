@@ -1,56 +1,65 @@
-import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
-import { SharedDataService } from '../shared-data.service';
+import { Component, DoCheck, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Socket } from 'ngx-socket-io';
+import { SharedDataService } from '../services/shared-data.service';
 
 @Component({
   selector: 'app-que-ans',
   templateUrl: './que-ans.component.html',
   styleUrls: ['./que-ans.component.css'],
 })
-export class QueAnsComponent implements OnInit, OnDestroy, DoCheck {
+export class QueAnsComponent implements OnInit, DoCheck {
   questionBank = [];
-  counter = 0;
-  displayAns = false;
-  timerInterval;
-  timeLeft: number = 10;
+  loadedUrl: string;
+  counter: number = 0;
+  timer: number = 10;
+  displayAns: boolean = false;
+  stopTimer: boolean = false;
 
-  constructor(private dataService: SharedDataService) {
+  constructor(
+    private router: Router,
+    private dataService: SharedDataService,
+    private socket: Socket
+  ) {
+    this.router.events.subscribe((res) => {
+      this.loadedUrl = this.router.url;
+    });
     this.questionBank = dataService.questionBank;
     this.counter = dataService.counter;
   }
 
   ngOnInit() {
-    this.dataService.latestCount.subscribe({
-      next: (count: number) => {
-        this.counter = count;
-      },
+    this.socket.on('count', (count) => {
+      this.counter = count;
     });
-    this.timer();
-  }
-  ngDoCheck() {
-    this.dataService.giveUpdatedTime(this.timeLeft);
-    this.dataService.coummunicateTime.subscribe((time) => {
-      this.timeLeft = time;
-    });
-
-    this.dataService.showAns.subscribe((ans) => {
+    this.socket.on('ans', (ans) => {
       this.displayAns = ans;
     });
   }
-  timer() {
-    this.timerInterval = setInterval(() => {
-      if (this.timeLeft > 0 && this.timeLeft <= 10) {
-        this.timeLeft--;
-      } else {
-        this.timeLeft = 0;
-      }
-    }, 1000);
+  ngDoCheck() {
+    if (this.timer > 0) {
+      this.socket.on('time', (time) => {
+        this.timer = time;
+      });
+    }
   }
 
+  onStart() {
+    this.dataService.onStart();
+  }
+  onNext() {
+    this.dataService.onNext();
+  }
+  onFinish() {
+    this.dataService.onFinish();
+  }
+  onShowAns() {
+    this.dataService.onShowAns();
+  }
+  onSubmit() {
+    this.dataService.onSubmit();
+  }
   onAnsClick(qi, ai) {
     this.dataService.onAnsClick(qi, ai);
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.timerInterval);
   }
 }

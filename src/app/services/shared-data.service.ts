@@ -1,10 +1,10 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { WebSocketService } from './web-socket.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SharedDataService {
+export class SharedDataService implements OnDestroy {
   questionBank = [
     {
       id: 1,
@@ -28,46 +28,43 @@ export class SharedDataService {
       counter: 3,
     },
   ];
+  counter: number = 0;
+  timer: number = 10;
+  timerInterval;
+  displayAns = false;
   ansStatus;
   ques;
   ans;
-  counter = 0;
-  displayAns = false;
 
-  showAns = new Subject<boolean>();
-  latestCount = new Subject();
-  coummunicateTime = new Subject<number>();
-  constructor() {}
+  constructor(private webSocketService: WebSocketService) {}
 
   onStart() {
     this.counter++;
-    this.latestCount.next(this.counter);
+    this.webSocketService.sendCount('count', this.counter);
+    this.startTimer();
   }
-
   onNext() {
     this.counter++;
-    this.latestCount.next(this.counter);
-
+    this.webSocketService.sendCount('count', this.counter);
     this.displayAns = false;
-    this.showAns.next(this.displayAns);
+    this.webSocketService.sendAns('ans', this.displayAns);
+    this.timer = 10;
+    this.startTimer();
   }
-
   onFinish() {
     this.counter = this.questionBank.length + 1;
-    this.latestCount.next(this.counter);
+    this.webSocketService.sendCount('count', this.counter);
   }
-
   onAnsClick(qi, ai) {
     this.ques = this.questionBank[qi];
     this.ans = this.ques.ans[ai];
   }
-
   onSubmit() {
     console.log(this.ques.que, this.ans);
   }
   onShowAns() {
     this.displayAns = true;
-    this.showAns.next(this.displayAns);
+    this.webSocketService.sendAns('ans', this.displayAns);
     this.compareAns();
   }
   compareAns() {
@@ -77,9 +74,17 @@ export class SharedDataService {
       this.ansStatus = false;
     }
   }
-  giveUpdatedTime(time) {
-    if (time >= 0) {
-      this.coummunicateTime.next(time);
-    }
+  startTimer() {
+    this.timerInterval = setInterval(() => {
+      if (this.timer > 0 && this.timer <= 10) {
+        this.timer--;
+        this.webSocketService.sendCount('time', this.timer);
+      } else {
+        this.timer = 0;
+      }
+    }, 1000);
+  }
+  ngOnDestroy() {
+    clearInterval(this.timerInterval);
   }
 }

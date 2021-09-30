@@ -1,41 +1,9 @@
-<!-- <div *ngIf="counter == 0">
-  <div>Welcome to Quiz Arena</div>
-</div>
-<p *ngIf="counter > 0 && counter <= questionBank.length">
-  Timer: {{ timeLeft }}
-</p>
-<div *ngIf="counter > 0 && counter <= questionBank.length">
-  <div *ngFor="let ques of questionBank; let qi = index">
-    <ul class="que" *ngIf="ques.counter == counter">
-      <li class="hide show">
-        {{ ques.que }}
-      </li>
-      <p
-        class="ans"
-        [ngClass]="{
-          ansDisplayed: displayAns && ques.correct == ques.ans[ai]
-        }"
-        *ngFor="let ans of ques.ans; let ai = index"
-        (click)="onAnsClick(qi, ai)"
-      >
-        <button [disabled]="timeLeft == 0">{{ ans }}</button>
-      </p>
-    </ul>
-  </div>
-</div> -->
-<!-- <app-host
-  (counter)="getCounter($event)"
-  (showAns)="onShowAns($event)"
-  [timer]="timeLeft"
-></app-host>
-<app-users [timer]="timeLeft" [ansShown]="displayAns"></app-users> -->
-
 <ul>
   <li role="presentation" routerLinkActive="active">
     <a routerLink="/host">Host</a>
   </li>
   <li role="presentation" routerLinkActive="active">
-    <a [routerLink]="'/user'">Users</a>
+    <a [routerLink]="'/users'">Users</a>
   </li>
 </ul>
 <router-outlet></router-outlet>
