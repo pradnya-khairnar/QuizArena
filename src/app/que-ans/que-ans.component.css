@@ -5,3 +5,7 @@ ul {
   background-color: rgb(113, 158, 113);
   display: inline-block;
 }
+.wrongAns {
+  background-color: red;
+  display: inline-block;
+}

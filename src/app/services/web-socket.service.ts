@@ -15,4 +15,7 @@ export class WebSocketService {
   sendAns(eventName: string, ans) {
     this.socket.emit(eventName, ans);
   }
+  nextQue(eventName: string) {
+    this.socket.emit(eventName);
+  }
 }

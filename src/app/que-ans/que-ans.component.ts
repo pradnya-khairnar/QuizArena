@@ -15,6 +15,12 @@ export class QueAnsComponent implements OnInit, DoCheck {
   timer: number = 10;
   displayAns: boolean = false;
   stopTimer: boolean = false;
+  ansStatus: boolean = false;
+  currentQues = {
+    ans: null,
+    correct: null,
+  };
+  userAns = null;
 
   constructor(
     private router: Router,
@@ -29,6 +35,11 @@ export class QueAnsComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
+    if (this.loadedUrl === '/users') {
+      this.socket.on('next', () => {
+        this.userAns = null;
+      });
+    }
     this.socket.on('count', (count) => {
       this.counter = count;
     });
@@ -57,9 +68,17 @@ export class QueAnsComponent implements OnInit, DoCheck {
     this.dataService.onShowAns();
   }
   onSubmit() {
-    this.dataService.onSubmit();
+    this.compareAns();
   }
   onAnsClick(qi, ai) {
-    this.dataService.onAnsClick(qi, ai);
+    this.currentQues = this.questionBank[qi];
+    this.userAns = this.currentQues.ans ? this.currentQues.ans[ai] : null;
+  }
+  compareAns() {
+    if (this.currentQues.correct && this.currentQues.correct === this.userAns) {
+      this.ansStatus = true;
+    } else {
+      this.ansStatus = false;
+    }
   }
 }

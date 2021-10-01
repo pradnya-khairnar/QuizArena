@@ -17,7 +17,12 @@
         <li>{{ counter }}. {{ ques.que }}</li>
         <p
           [ngClass]="{
-            ansDisplayed: displayAns && ques.correct == ques.ans[ai]
+            ansDisplayed: displayAns && ques.correct == ques.ans[ai],
+            wrongAns:
+              loadedUrl == '/users' &&
+              displayAns &&
+              userAns != ques.correct &&
+              userAns === ques.ans[ai]
           }"
           *ngFor="let ans of ques.ans; let ai = index"
           (click)="onAnsClick(qi, ai)"
@@ -61,6 +66,10 @@
       <button [disabled]="timer == 0" *ngIf="counter > 0" (click)="onSubmit()">
         SubmitAns
       </button>
+      <p *ngIf="ansStatus && displayAns">Yay..{{ userAns }} is right ans</p>
+      <p *ngIf="!ansStatus && displayAns">
+        Oops.. {{ userAns }} is wrong ans..
+      </p>
     </div>
   </div>
 </div>

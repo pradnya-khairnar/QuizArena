@@ -29,6 +29,9 @@ io.on('connection', (socket) => {
    socket.on('ans', (ans)=>{
     io.emit('ans',ans);
   })
+  socket.on('next',()=>{
+    io.emit('next');
+  })
 });
 
 // Start the app by listening on the default Heroku port

@@ -30,11 +30,8 @@ export class SharedDataService implements OnDestroy {
   ];
   counter: number = 0;
   timer: number = 10;
-  timerInterval;
+  timerIntervalId;
   displayAns = false;
-  ansStatus;
-  ques;
-  ans;
 
   constructor(private webSocketService: WebSocketService) {}
 
@@ -48,41 +45,23 @@ export class SharedDataService implements OnDestroy {
     this.webSocketService.sendCount('count', this.counter);
     this.displayAns = false;
     this.webSocketService.sendAns('ans', this.displayAns);
+    clearInterval(this.timerIntervalId);
     this.timer = 10;
     this.startTimer();
+    this.webSocketService.nextQue('next');
   }
   onFinish() {
     this.counter = this.questionBank.length + 1;
     this.webSocketService.sendCount('count', this.counter);
   }
-  onAnsClick(qi, ai) {
-    this.ques = this.questionBank[qi];
-    this.ans = this.ques.ans[ai];
-  }
-  onSubmit() {
-    console.log(
-      'Q.',
-      this.ques.que,
-      'User Ans:',
-      this.ans,
-      'Correct Ans:',
-      this.ques.correct
-    );
-  }
+
   onShowAns() {
     this.displayAns = true;
     this.webSocketService.sendAns('ans', this.displayAns);
-    this.compareAns();
   }
-  compareAns() {
-    if (this.ques.correct === this.ans) {
-      this.ansStatus = true;
-    } else {
-      this.ansStatus = false;
-    }
-  }
+
   startTimer() {
-    this.timerInterval = setInterval(() => {
+    this.timerIntervalId = setInterval(() => {
       if (this.timer > 0 && this.timer <= 10) {
         this.timer--;
         this.webSocketService.sendCount('time', this.timer);
@@ -92,6 +71,6 @@ export class SharedDataService implements OnDestroy {
     }, 1000);
   }
   ngOnDestroy() {
-    clearInterval(this.timerInterval);
+    clearInterval(this.timerIntervalId);
   }
 }
