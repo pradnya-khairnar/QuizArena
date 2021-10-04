@@ -1,13 +1,30 @@
 <div>
-  <div *ngIf="loadedUrl == '/host'">
-    <h2>Host Screen</h2>
-  </div>
-  <div *ngIf="loadedUrl == '/users'">
-    <h2>User Screen</h2>
-  </div>
   <div *ngIf="counter == 0">
     <div>Welcome to Quiz Arena</div>
   </div>
+  <div *ngIf="loadedUrl == '/host'">
+    <h2>Host Screen</h2>
+    <div>
+      Display all joined users:
+      <ul *ngFor="let user of usersList; let i = index">
+        <li>
+          {{ user }}
+          <!-- <p *ngIf="displayAns">{{ usersData }}</p> -->
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div *ngIf="loadedUrl == '/users'">
+    <h2>User Screen</h2>
+    <div *ngIf="counter == 0 && hideUserInput == false">
+      <label>Enter user name: </label>
+      <input name="user" placeholder="enter name" #inputUserName />
+      <button (click)="sendUserName(inputUserName)">Join Quiz</button>
+      <p *ngIf="userExists">User Name Exists, try different name..</p>
+    </div>
+    <p *ngIf="hideUserInput">Waiting for host to start the game..</p>
+  </div>
+
   <p *ngIf="counter > 0 && counter <= questionBank.length">
     Timer: {{ timer }}
   </p>
@@ -61,9 +78,13 @@
     </button>
   </div>
   <!-- Users section -->
-  <div *ngIf="loadedUrl == '/users'">
+  <div>
     <div>
-      <button [disabled]="timer == 0" *ngIf="counter > 0" (click)="onSubmit()">
+      <button
+        [disabled]="timer == 0"
+        *ngIf="counter > 0"
+        (click)="onSubmitAns()"
+      >
         SubmitAns
       </button>
       <p *ngIf="ansStatus && displayAns">Yay..{{ userAns }} is right ans</p>

@@ -19,7 +19,11 @@ app.get('/*', function(req,res) {
 
 // connecting, emiting & listing to client
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  id = socket.id;
+  console.log('a user connected, has id:', id);
+  socket.on('sendUserName', (name)=>{
+    io.emit('sendUserName', name);
+  })
   socket.on('count', (count)=>{
     io.emit('count', count);
   })
@@ -31,6 +35,10 @@ io.on('connection', (socket) => {
   })
   socket.on('next',()=>{
     io.emit('next');
+  })
+  socket.on('correctAnsCount', (name,ansCount)=>{
+    io.emit('correctAnsCount',name,ansCount);
+    console.log("ans to server", name,ansCount);
   })
 });
 

@@ -1,6 +1,8 @@
 {
   "name": "quiz-arena",
   "version": "0.0.0",
+  "license" : "MIT",
+  "author": "Pradnya Shejwal",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",

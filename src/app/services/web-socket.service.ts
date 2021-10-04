@@ -6,6 +6,9 @@ import { Socket } from 'ngx-socket-io';
 export class WebSocketService {
   constructor(private socket: Socket) {}
 
+  sendUserName(eventName: string, name) {
+    this.socket.emit(eventName, name);
+  }
   sendCount(eventName: string, count) {
     this.socket.emit(eventName, count);
   }
@@ -17,5 +20,8 @@ export class WebSocketService {
   }
   nextQue(eventName: string) {
     this.socket.emit(eventName);
+  }
+  sendUsersCorrentAnsCount(eventName: string, name, ans) {
+    this.socket.emit(eventName, name, ans);
   }
 }
