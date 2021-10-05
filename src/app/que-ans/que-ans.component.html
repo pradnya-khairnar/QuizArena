@@ -7,49 +7,57 @@
     <div>
       Display all joined users:
       <ul *ngFor="let user of usersList; let i = index">
-        <li>
+        <li *ngIf="displayAns">
           {{ user }}
-          <!-- <p *ngIf="displayAns">{{ usersData }}</p> -->
         </li>
       </ul>
     </div>
   </div>
   <div *ngIf="loadedUrl == '/users'">
     <h2>User Screen</h2>
-    <div *ngIf="counter == 0 && hideUserInput == false">
+    <div *ngIf="hideUserInput == false">
       <label>Enter user name: </label>
       <input name="user" placeholder="enter name" #inputUserName />
       <button (click)="sendUserName(inputUserName)">Join Quiz</button>
       <p *ngIf="userExists">User Name Exists, try different name..</p>
     </div>
-    <p *ngIf="hideUserInput">Waiting for host to start the game..</p>
+    <p *ngIf="hideUserInput && counter == 0">
+      Waiting for host to start the game..
+    </p>
   </div>
 
-  <p *ngIf="counter > 0 && counter <= questionBank.length">
-    Timer: {{ timer }}
-  </p>
-  <div *ngIf="counter > 0 && counter <= questionBank.length">
-    <div *ngFor="let ques of questionBank; let qi = index">
-      <ul *ngIf="ques.counter == counter">
-        <li>{{ counter }}. {{ ques.que }}</li>
-        <p
-          [ngClass]="{
-            ansDisplayed: displayAns && ques.correct == ques.ans[ai],
-            wrongAns:
-              loadedUrl == '/users' &&
-              displayAns &&
-              userAns != ques.correct &&
-              userAns === ques.ans[ai]
-          }"
-          *ngFor="let ans of ques.ans; let ai = index"
-          (click)="onAnsClick(qi, ai)"
-        >
-          <button [disabled]="timer == 0">{{ ans }}</button>
-        </p>
-      </ul>
+  <div
+    *ngIf="
+      (loadedUrl == '/users' && hideUserInput) ||
+      (loadedUrl == '/host' && !hideUserInput)
+    "
+  >
+    <p *ngIf="counter > 0 && counter <= questionBank.length">
+      Timer: {{ timer }}
+    </p>
+    <div *ngIf="counter > 0 && counter <= questionBank.length">
+      <div *ngFor="let ques of questionBank; let qi = index">
+        <ul *ngIf="ques.counter == counter">
+          <li>{{ counter }}. {{ ques.que }}</li>
+          <p
+            [ngClass]="{
+              ansDisplayed: displayAns && ques.correct == ques.ans[ai],
+              wrongAns:
+                loadedUrl == '/users' &&
+                displayAns &&
+                userAns != ques.correct &&
+                userAns === ques.ans[ai]
+            }"
+            *ngFor="let ans of ques.ans; let ai = index"
+            (click)="onAnsClick(qi, ai)"
+          >
+            <button [disabled]="timer == 0">{{ ans }}</button>
+          </p>
+        </ul>
+      </div>
     </div>
   </div>
-  <div *ngIf="counter > questionBank.length">Thanks for taking the quiz..</div>
+
   <!--Host section -->
   <div *ngIf="loadedUrl == '/host'">
     <button (click)="onStart()" *ngIf="counter == 0">Start Quiz</button>
@@ -79,7 +87,7 @@
   </div>
   <!-- Users section -->
   <div>
-    <div>
+    <div *ngIf="loadedUrl == '/users' && hideUserInput">
       <button
         [disabled]="timer == 0"
         *ngIf="counter > 0"
@@ -87,10 +95,19 @@
       >
         SubmitAns
       </button>
-      <p *ngIf="ansStatus && displayAns">Yay..{{ userAns }} is right ans</p>
-      <p *ngIf="!ansStatus && displayAns">
-        Oops.. {{ userAns }} is wrong ans..
-      </p>
+      <div
+        *ngIf="
+          counter < questionBank.length + 1 &&
+          counter > 0 &&
+          displayAns &&
+          userAns != null
+        "
+      >
+        <p *ngIf="ansStatus">Yay..{{ userAns }} is right ans</p>
+        <p *ngIf="!ansStatus">Oops.. {{ userAns }} is wrong ans..</p>
+      </div>
+      <p *ngIf="userAns == null && displayAns">No ans given..</p>
     </div>
   </div>
+  <div *ngIf="counter > questionBank.length">Thanks for taking the quiz..</div>
 </div>

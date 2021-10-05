@@ -58,6 +58,7 @@ export class SharedDataService implements OnDestroy {
   onShowAns() {
     this.displayAns = true;
     this.webSocketService.sendAns('ans', this.displayAns);
+    console.log('show ans', this.displayAns);
   }
 
   startTimer() {

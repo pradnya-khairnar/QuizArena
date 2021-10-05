@@ -28,7 +28,6 @@ export class QueAnsComponent implements OnInit, DoCheck {
   userCorrectAnsCount = 0;
   hideUserInput = false;
   userExists = false;
-  uname: string;
 
   constructor(
     private router: Router,
@@ -45,12 +44,10 @@ export class QueAnsComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.socket.on('sendUserName', (name) => {
-      console.log('>name>', name, this.uname);
       if (this.usersData[name] === undefined) {
         this.userName;
         this.usersData[name] = 0;
         this.usersList = Object.keys(this.usersData);
-        this.uname = undefined;
       } else {
         this.userExists = true;
         this.hideUserInput = false;
@@ -71,7 +68,6 @@ export class QueAnsComponent implements OnInit, DoCheck {
     this.socket.on('correctAnsCount', (name, ansCount) => {
       this.usersData[name] = ansCount;
       this.usersList = Object.entries(this.usersData);
-      console.log('user, count...', this.userName, ansCount);
     });
   }
   ngDoCheck() {
@@ -85,7 +81,6 @@ export class QueAnsComponent implements OnInit, DoCheck {
   sendUserName(event: any) {
     this.hideUserInput = true;
     this.userName = event.value;
-    this.uname = event.value;
     this.webSocketService.sendUserName('sendUserName', this.userName);
   }
   onStart() {
