@@ -38,7 +38,6 @@ io.on('connection', (socket) => {
   })
   socket.on('correctAnsCount', (name,ansCount)=>{
     io.emit('correctAnsCount',name,ansCount);
-    console.log("ans to server", name,ansCount);
   })
 });
 

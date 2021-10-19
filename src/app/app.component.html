@@ -1,11 +1,13 @@
-<div *ngIf="loadedUrl != '/host'">
-  <ul *ngIf="loadedUrl != '/users'">
-    <li role="presentation" routerLinkActive="active">
-      <a routerLink="/host">Host</a>
-    </li>
-    <li role="presentation" routerLinkActive="active">
-      <a [routerLink]="'/users'">Users</a>
-    </li>
-  </ul>
+<div class="main-wrapper">
+  <div *ngIf="loadedUrl != '/host'">
+    <ul *ngIf="loadedUrl != '/users'">
+      <li role="presentation" routerLinkActive="active">
+        <a routerLink="/host">Host</a>
+      </li>
+      <li role="presentation" routerLinkActive="active">
+        <a [routerLink]="'/users'">Users</a>
+      </li>
+    </ul>
+  </div>
+  <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>

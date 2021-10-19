@@ -8,9 +8,14 @@ export class SharedDataService implements OnDestroy {
   questionBank = [
     {
       id: 1,
-      que: 'Who is PM of India?',
-      ans: ['Modi', 'Trump', 'Shaha', 'None'],
-      correct: 'Modi',
+      que: 'What would you do to make your password difficult to guess?',
+      ans: [
+        'Set it complex enough',
+        'User similar old password',
+        'Use your name & birth date',
+        'User generic terms & numeric sequennces',
+      ],
+      correct: 'Set it complex enough',
       counter: 1,
     },
     {
@@ -53,6 +58,7 @@ export class SharedDataService implements OnDestroy {
   onFinish() {
     this.counter = this.questionBank.length + 1;
     this.webSocketService.sendCount('count', this.counter);
+    this.webSocketService.nextQue('next');
   }
 
   onShowAns() {

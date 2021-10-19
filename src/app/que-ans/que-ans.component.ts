@@ -45,13 +45,13 @@ export class QueAnsComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.socket.on('sendUserName', (name) => {
       if (this.usersData[name] === undefined) {
-        this.userName;
         this.usersData[name] = 0;
         this.usersList = Object.keys(this.usersData);
+        console.log('user name', name);
       } else {
         this.userExists = true;
         this.hideUserInput = false;
-        console.log('user name exists');
+        console.log('user name exists', name);
       }
     });
     if (this.loadedUrl === '/users') {
