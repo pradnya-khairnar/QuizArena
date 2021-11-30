@@ -47,7 +47,6 @@ export class QueAnsComponent implements OnInit, DoCheck {
       if (this.usersData[name] === undefined) {
         this.usersData[name] = 0;
         this.usersList = Object.keys(this.usersData);
-        console.log('user name', name);
       } else {
         this.userExists = true;
         this.hideUserInput = false;
@@ -68,6 +67,8 @@ export class QueAnsComponent implements OnInit, DoCheck {
     this.socket.on('correctAnsCount', (name, ansCount) => {
       this.usersData[name] = ansCount;
       this.usersList = Object.entries(this.usersData);
+      console.log('user data', this.usersData);
+      console.log('user list', this.usersList[0]);
     });
   }
   ngDoCheck() {

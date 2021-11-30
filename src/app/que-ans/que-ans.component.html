@@ -1,4 +1,4 @@
-<div *ngIf="counter == 0">Welcome to Quiz Arena</div>
+<div *ngIf="counter == 0" class="welcome">Welcome to Quiz Arena</div>
 <div class="que-ans-wrapper">
   <div class="left-flex-container example-button-row">
     <div *ngIf="loadedUrl == '/users'">
@@ -144,12 +144,14 @@
   <div class="right-flex-container" *ngIf="loadedUrl == '/host'">
     <div class="joinedUsers">
       <h1>Display all joined users:</h1>
-      <ul *ngFor="let user of usersList; let i = index">
-        <li>
-          <h2>{{ user }}</h2>
-        </li>
-      </ul>
+      <div class="users">
+        <h2 *ngFor="let user of usersList; let i = index">
+          {{ user }}
+        </h2>
+      </div>
     </div>
   </div>
 </div>
-<div *ngIf="counter > questionBank.length">Thanks for taking the quiz..</div>
+<div *ngIf="counter > questionBank.length" class="thanks">
+  Thanks for taking the quiz..
+</div>

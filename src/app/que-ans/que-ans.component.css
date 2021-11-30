@@ -2,6 +2,12 @@
   width: 100%;
 }
 
+.welcome,
+.thanks {
+  text-align: center;
+  padding: 30px;
+  font-size: 30px;
+}
 .que-ans-wrapper {
   display: flex;
   flex-direction: column;
@@ -11,12 +17,14 @@
 .left-flex-container {
   padding: 30px;
 }
+ul {
+  list-style-type: none;
+}
 .timer {
   width: 80px;
   text-align: center;
   font-size: 18px;
   padding: 7px;
-  background: linear-gradient(top, #222, #444);
   display: inline-block;
   border: 5px solid #efefef;
   border-radius: 5px;
@@ -28,8 +36,12 @@
   color: #fff;
   text-shadow: 0 0 5px rgba(255, 255, 255, 1);
 }
-ul {
-  list-style-type: none;
+.users,
+.score {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  margin: 0px 5px;
 }
 .ansDisplayed {
   background-color: rgb(107, 207, 107);
@@ -60,12 +72,7 @@ ul {
 .ansFeedback p {
   margin-top: 10px;
 }
-/* .que-ans button {
-  white-space: normal;
-  text-align: left;
-  padding: 16px;
-  line-height: 20px;
-} */
+
 @media only screen and (min-width: 768px) {
   /* For desktop: */
   .col-1 {
@@ -109,15 +116,9 @@ ul {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 100vh;
-    width: 100vh;
   }
   .right-flex-container,
   .left-flex-container {
     padding: 30px;
   }
-  /* .userSubmit {
-    text-align: left;
-    margin-left: 40px;
-  } */
 }

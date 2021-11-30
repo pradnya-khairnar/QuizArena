@@ -8,6 +8,7 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { NgpSortModule } from 'ngp-sort-pipe';
 
 const config: SocketIoConfig = { url: 'http://localhost:4201', options: {} };
 @NgModule({
@@ -19,6 +20,7 @@ const config: SocketIoConfig = { url: 'http://localhost:4201', options: {} };
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
+    NgpSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
